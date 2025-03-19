@@ -1,0 +1,242 @@
+:root {
+    --primary-green: #2ecc71;
+    --dark-green: #27ae60;
+    --light-brown: #d35400;
+    --dark-brown: #8b4513;
+    --background: #f0f2f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* Login Sections */
+.login-section {
+    flex: 1;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-box h2 {
+    color: var(--dark-green);
+    margin-bottom: 20px;
+}
+
+.icon {
+    font-size: 40px;
+    color: var(--primary-green);
+    margin-bottom: 20px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.3);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: var(--dark-green);
+}
+
+.extra-links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.extra-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.extra-links a:hover {
+    color: var(--primary-green);
+}
+
+/* Tree Section */
+.tree-section {
+    flex: 1;
+    max-width: 400px;
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    margin-bottom: 30px;
+}
+
+.logo h1 {
+    color: var(--dark-green);
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.logo p {
+    color: #666;
+}
+
+.tree {
+    position: relative;
+    height: 400px;
+    margin: 0 auto;
+    animation: sway 5s infinite ease-in-out;
+}
+
+.tree-top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    background: var(--primary-green);
+    border-radius: 50%;
+}
+
+.tree-middle {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 160px;
+    background: var(--primary-green);
+    border-radius: 50%;
+}
+
+.tree-bottom {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: var(--primary-green);
+    border-radius: 50%;
+}
+
+.trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 120px;
+    background: var(--dark-brown);
+    border-radius: 10px;
+}
+
+.roots {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.roots::before,
+.roots::after {
+    content: '';
+    width: 60px;
+    height: 10px;
+    background: var(--dark-brown);
+    border-radius: 10px;
+    transform-origin: center;
+}
+
+.roots::before {
+    transform: rotate(-45deg);
+}
+
+.roots::after {
+    transform: rotate(45deg);
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(2deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .login-section,
+    .tree-section {
+        max-width: 100%;
+    }
+
+    .tree {
+        height: 300px;
+    }
+}
