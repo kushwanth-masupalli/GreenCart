@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function animateTree() {
         swayAngle += 0.02;
         const rotation = Math.sin(swayAngle) * 2;
-        tree.style.transform = `rotate(${rotation}deg)`;
+        tree.style.transform = 'rotate(${rotation}deg)';
         requestAnimationFrame(animateTree);
     }
 
@@ -45,3 +45,34 @@ function validateProducerLogin(username, password) {
 function validateConsumerLogin(username, password) {
     // Add your validation logic here
 }
+document.addEventListener('DOMContentLoaded', () => {
+    // Producer Login
+    const producerForm = document.getElementById('producer-login');
+    producerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = e.target.querySelector('input[type="text"]').value;
+        const password = e.target.querySelector('input[type="password"]').value;
+        console.log('Producer Login:', { username, password });
+    });
+
+    // Consumer Login
+    const consumerForm = document.getElementById('consumer-login');
+    consumerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = e.target.querySelector('input[type="text"]').value;
+        const password = e.target.querySelector('input[type="password"]').value;
+        console.log('Consumer Login:', { username, password });
+    });
+
+    // Tree Animation
+    const tree = document.querySelector('.tree');
+    let swayAngle = 0;
+    
+    function animateTree() {
+        swayAngle += 0.02;
+        const rotation = Math.sin(swayAngle) * 2;
+        tree.style.transform = 'rotate(${rotation}deg)';
+        requestAnimationFrame(animateTree);
+    }
+    animateTree();
+}); 

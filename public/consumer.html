@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenCart - Organic Marketplace</title>
+    <link rel="stylesheet" href="consumer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-leaf"></i>
+            <span>GreenCart</span>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search vegetables..." aria-label="Search products">
+            <select id="categoryFilter" aria-label="Filter by category">
+                <option value="all">All Categories</option>
+                <option value="leafy">Leafy Greens</option>
+                <option value="root">Root Vegetables</option>
+                <option value="fruit">Fruit Vegetables</option>
+                <option value="organic">Organic</option>
+            </select>
+        </div>
+        <div class="nav-right">
+            <div class="cart-icon" role="button" aria-label="View shopping cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <div class="user-profile" role="button" aria-label="User profile">
+                <img src="https://via.placeholder.com/40" alt="User Profile">
+                <span>John Doe</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Sidebar Filters -->
+        
+
+        <!-- Products Grid -->
+        <section class="products-grid" id="productsGrid" aria-label="Product listings">
+            <!-- Product cards will be dynamically added here -->
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <dialog class="modal" id="cartModal" aria-modal="true" aria-labelledby="cartModalTitle">
+        <div class="modal-content">
+            <h2 id="cartModalTitle">Shopping Cart</h2>
+            <div class="cart-items" aria-live="polite">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" aria-label="Proceed to checkout">Proceed to Checkout</button>
+        </div>
+    </dialog>
+
+    <!-- Product Card Template -->
+    <template id="product-card-template">
+        <article class="product-card" aria-label="Product card">
+            <div class="product-image">
+                <img src="" alt="Product image">
+                <div class="organic-badge" aria-hidden="true">Organic</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name"></h3>
+                <p class="product-price"></p>
+                <p class="product-quantity"></p>
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="qty-btn minus" aria-label="Decrease quantity">-</button>
+                        <input type="number" value="1" min="1" aria-label="Quantity">
+                        <button class="qty-btn plus" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="add-to-cart" aria-label="Add to cart">
+                        <i class="fas fa-cart-plus"></i>
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </article>
+    </template>
+
+    <script src="consumer.js"></script>
+</body>
+</html>

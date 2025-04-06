@@ -1,9 +1,58 @@
+/* Background Image Slider */
+.background-slider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: contain;  /* Ensures full image is visible */
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    animation: slideShow 12s infinite;
+}
+
+.slide:nth-child(1) {
+    background-image: url('first.jpg'); /* Ensure correct filename */
+    animation-delay: 0s;
+}
+
+.slide:nth-child(2) {
+    background-image: url('s2.jpg');
+    animation-delay: 3s;
+}
+
+.slide:nth-child(3) {
+    background-image: url('second.jpg');
+    animation-delay: 6s;
+}
+
+.slide:nth-child(4) {
+    background-image: url('s3.jpg');
+    animation-delay: 9s;
+}
+
+/* Improved Keyframes */
+@keyframes slideShow {
+    0% { opacity: 0; transform: scale(1.1); }
+    10% { opacity: 1; transform: scale(1); }
+    30% { opacity: 1; }
+    40% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 0; }
+}
 :root {
     --primary-green: #2ecc71;
     --dark-green: #27ae60;
-    --light-brown: #d35400;
-    --dark-brown: #8b4513;
     --background: #f0f2f5;
+    --text-color: #333;
 }
 
 * {
@@ -17,226 +66,212 @@ body {
     background-color: var(--background);
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+/* Center AgroConnect Heading */
+/* Logo Styling */
+.logo {
+    position: absolute; /* Fixes it to the top */
+    top: 20px; /* Adjust spacing from the top */
+    left: 50%; /* Centers it horizontally */
+    transform: translateX(-50%); /* Ensures perfect centering */
+    text-align: center;
+    width: 100%;
+    z-index: 10; /* Ensures the logo appears above the background slider */
+}
+
+.logo img {
+    display: block; /* Ensures the image behaves like a block element */
+    margin: 0 auto; /* Centers the image horizontally */
+    width: 10%; /* Adjust the size as needed */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.logo p {
+    font-size: 25px;
+    color: #000;
+    text-align: center; /* Ensures the text is centered */
+    margin-top: 10px; /* Adds spacing between the logo and the text */
+}
+
+/* Main Layout */
 .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 80%;
     max-width: 1200px;
-    padding: 20px;
+    gap: 30px;
 }
 
 /* Login Sections */
 .login-section {
     flex: 1;
-    max-width: 400px;
+    max-width: 450px;
     padding: 20px;
-}
-
-.login-box {
     background: white;
-    padding: 30px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: top;
+    transition: transform 0.3s;
 }
 
-.login-box h2 {
-    color: var(--dark-green);
-    margin-bottom: 20px;
+.login-section:hover {
+    transform: scale(1.02);
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .icon {
-    font-size: 40px;
+    font-size: 28px;
     color: var(--primary-green);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
+/* Input Fields */
 .input-group {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .input-group i {
     position: absolute;
-    left: 15px;
+    left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #666;
+    color: gray;
 }
 
 .input-group input {
     width: 100%;
-    padding: 12px 40px;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    outline: none;
-    transition: all 0.3s;
+    padding: 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.input-group input:focus {
-    border-color: var(--primary-green);
-    box-shadow: 0 0 5px rgba(46, 204, 113, 0.3);
-}
-
+/* Button Styling */
 button {
     width: 100%;
     padding: 12px;
     background: var(--primary-green);
     color: white;
     border: none;
-    border-radius: 25px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s;
 }
+.slide:nth-child(1) {
+    background-image: url('first.jpg');
+    animation-delay: 0s;
+}
+
+.slide:nth-child(2) {
+    background-image: url('s2.jpg');
+    animation-delay: 4s;
+}
+
+.slide:nth-child(3) {
+    background-image: url('second.jpg');
+    animation-delay: 8s;
+}
+
+.slide:nth-child(4) {
+    background-image: url('s3.jpg');
+    animation-delay: 12s;
+}
+
+@keyframes slideShow {
+    0% { opacity: 0; transform: scale(1.1); }
+    10% { opacity: 1; transform: scale(1); }
+    30% { opacity: 1; }
+    40% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 0; }
+}
+
 
 button:hover {
     background: var(--dark-green);
 }
 
+/* Fixing Hyperlink Styles */
 .extra-links {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
 .extra-links a {
-    color: #666;
+    color: var(--primary-green);
     text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s;
+    margin: 0 5px;
+    font-weight: 600;
 }
 
 .extra-links a:hover {
-    color: var(--primary-green);
+    text-decoration: underline;
 }
 
-/* Tree Section */
-.tree-section {
-    flex: 1;
-    max-width: 400px;
-    text-align: center;
-    padding: 20px;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.logo {
-    margin-bottom: 30px;
-}
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
 
-.logo h1 {
-    color: var(--dark-green);
-    font-size: 36px;
-    margin-bottom: 10px;
-}
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
 
-.logo p {
-    color: #666;
-}
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: slideShow 8s infinite;
+        }
 
-.tree {
-    position: relative;
-    height: 400px;
-    margin: 0 auto;
-    animation: sway 5s infinite ease-in-out;
-}
+        .slide:nth-child(1) {
+            background-image: url('first.jpg');
+            animation-delay: 0s;
+        }
 
-.tree-top {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 120px;
-    background: var(--primary-green);
-    border-radius: 50%;
-}
+        .slide:nth-child(2) {
+            background-image: url('s2jpg');
+            animation-delay: 2s;
+        }
 
-.tree-middle {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160px;
-    height: 160px;
-    background: var(--primary-green);
-    border-radius: 50%;
-}
+        .slide:nth-child(3) {
+            background-image: url('second.jpg');
+            animation-delay: 4s;
+        }
 
-.tree-bottom {
-    position: absolute;
-    top: 140px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 200px;
-    background: var(--primary-green);
-    border-radius: 50%;
-}
+        .slide:nth-child(4) {
+            background-image: url('s3.jpg');
+            animation-delay: 6s;
+        }
 
-.trunk {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 120px;
-    background: var(--dark-brown);
-    border-radius: 10px;
-}
-
-.roots {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160px;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.roots::before,
-.roots::after {
-    content: '';
-    width: 60px;
-    height: 10px;
-    background: var(--dark-brown);
-    border-radius: 10px;
-    transform-origin: center;
-}
-
-.roots::before {
-    transform: rotate(-45deg);
-}
-
-.roots::after {
-    transform: rotate(45deg);
-}
-
-@keyframes sway {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(2deg); }
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .container {
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .login-section,
-    .tree-section {
-        max-width: 100%;
-    }
-
-    .tree {
-        height: 300px;
-    }
-}
+        @keyframes slideShow {
+            0% { opacity: 0; transform: translateX(100%); }
+            10% { opacity: 1; transform: translateX(0); }
+            40% { opacity: 1; transform: translateX(0); }
+            50% { opacity: 0; transform: translateX(-100%); }
+            100% { opacity: 0; transform: translateX(-100%);}}
