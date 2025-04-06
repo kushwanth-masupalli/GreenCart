@@ -2,7 +2,7 @@ const mongoose= require('mongoose')
 
 const mongooseSchema = new mongoose.Schema({
      
-     id : {
+     pid : {
         type:String,
         required : [true,'id is mandatory']
      },
@@ -20,8 +20,12 @@ const mongooseSchema = new mongoose.Schema({
      quantity :{
         type: Number,
         required :[true,'quantity is must and should']
+     },
+     imgpath :{
+       type : String ,
+       required :[true,'img path is mandatory']
      }
 })
 
 
-module.exports = mongoose.model("product",mongooseSchema);
+module.exports = mongoose.model("Product",mongooseSchema);

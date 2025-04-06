@@ -1,14 +1,16 @@
-const express = require('express')
+const express = require('express');
 const app = express();
 const path = require('path');
-app.use(express.static(path.join(__dirname,'public')));
+const routes = require('./routes/route.js');
+const connectToMongo = require('./database/db_connection');
 
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'public','index.html'));
-});
+app.use(express.json()); 
 
-app.get('/consumer/')
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/products', routes);
 
-app.listen(3000,()=>{
-    console.log("listening in 3000");
+connectToMongo();
+
+app.listen(3000, () => {
+  console.log("listening on 3000");
 });

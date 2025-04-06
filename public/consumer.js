@@ -1,142 +1,107 @@
-// Sample product data
-const products = [
-    { id: 1, name: "Spinach", category: "leafy", price: 2.5, organic: true, image: "https://via.placeholder.com/150" },
-    { id: 2, name: "Carrot", category: "root", price: 1.0, organic: false, image: "https://via.placeholder.com/150" },
-    { id: 3, name: "Tomato", category: "fruit", price: 1.5, organic: true, image: "https://via.placeholder.com/150" },
-    { id: 4, name: "Lettuce", category: "leafy", price: 2.0, organic: true, image: "https://via.placeholder.com/150" },
-    { id: 5, name: "Potato", category: "root", price: 0.8, organic: false, image: "https://via.placeholder.com/150" },
-    { id: 6, name: "Cucumber", category: "fruit", price: 1.2, organic: true, image: "https://via.placeholder.com/150" },
-];
-
 let cart = [];
 
 // DOM Elements
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
-const priceRange = document.getElementById("priceRange");
-const priceValue = document.getElementById("priceValue");
-const sortBy = document.getElementById("sortBy");
 const productsGrid = document.getElementById("productsGrid");
-const cartModal = document.getElementById("cartModal");
-const cartItemsContainer = document.querySelector(".cart-items");
-const cartTotal = document.getElementById("cartTotal");
-const cartCount = document.querySelector(".cart-count");
-const cartIcon = document.querySelector(".cart-icon");
+const productCardTemplate = document.getElementById("product-card-template");
 
-// Initialize app
-document.addEventListener("DOMContentLoaded", () => {
-    renderProducts(products);
-    updatePriceLabel();
-});
-
-// Event Listeners
-searchInput.addEventListener("input", filterProducts);
-categoryFilter.addEventListener("change", filterProducts);
-priceRange.addEventListener("input", filterProducts);
-sortBy.addEventListener("change", sortProducts);
-cartIcon.addEventListener("click", toggleCartModal);
-
-// Render products dynamically
-function renderProducts(productList) {
-    productsGrid.innerHTML = "";
-    const template = document.getElementById("product-card-template");
-
-    productList.forEach((product) => {
-        const card = template.content.cloneNode(true);
-
-        card.querySelector(".product-image img").src = product.image;
-        card.querySelector(".product-name").textContent = product.name;
-        card.querySelector(".product-price").textContent = `$${product.price.toFixed(2)}`;
-        card.querySelector(".organic-badge").style.display = product.organic ? "block" : "none";
-
-        const quantityInput = card.querySelector("input[type='number']");
-        const addToCartBtn = card.querySelector(".add-to-cart");
-
-        // Add to cart functionality
-        addToCartBtn.addEventListener("click", () => {
-            const quantity = parseInt(quantityInput.value);
-            addToCart(product, quantity);
-        });
-
-        productsGrid.appendChild(card);
-    });
+// Utility function to format price
+function formatPrice(price) {
+    return `₹${parseFloat(price).toFixed(2)}`;
 }
 
-// Filter products based on search, category, and price range
-function filterProducts() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedCategory = categoryFilter.value;
-    const maxPrice = parseFloat(priceRange.value);
+// Render a single product card
+function renderProductCard(product) {
+    const cardClone = productCardTemplate.content.cloneNode(true);
+    const img = cardClone.querySelector('img');
+    const name = cardClone.querySelector('.product-name');
+    const price = cardClone.querySelector('.product-price');
+    const quantity = cardClone.querySelector('.product-quantity');
+    const qtyInput = cardClone.querySelector('input[type="number"]');
+    const plusBtn = cardClone.querySelector('.qty-btn.plus');
+    const minusBtn = cardClone.querySelector('.qty-btn.minus');
+    const addToCartBtn = cardClone.querySelector('.add-to-cart');
 
-    const filtered = products.filter((product) => {
-        const matchesSearch = product.name.toLowerCase().includes(searchTerm);
-        const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-        const matchesPrice = product.price <= maxPrice;
+    img.src = product.imgpath;
+    img.alt = product.name;
+    name.textContent = product.name;
+    price.textContent = `Price: ${formatPrice(product.price)}`;
+    quantity.textContent = `Available: ${product.quantity} kg`;
 
-        return matchesSearch && matchesCategory && matchesPrice;
+    plusBtn.addEventListener('click', () => {
+        qtyInput.value = parseInt(qtyInput.value) + 1;
     });
 
-    renderProducts(filtered);
-    updatePriceLabel();
-}
-
-// Update price label for price range slider
-function updatePriceLabel() {
-    priceValue.textContent = `$${priceRange.value}`;
-}
-
-// Sort products based on the selected option
-function sortProducts() {
-    const sorted = [...products].sort((a, b) => {
-        if (sortBy.value === "price-low") {
-            return a.price - b.price;
-        } else if (sortBy.value === "price-high") {
-            return b.price - a.price;
-        } else if (sortBy.value === "name") {
-            return a.name.localeCompare(b.name);
+    minusBtn.addEventListener('click', () => {
+        if (parseInt(qtyInput.value) > 1) {
+            qtyInput.value = parseInt(qtyInput.value) - 1;
         }
-        return 0;
     });
 
-    renderProducts(sorted);
+    addToCartBtn.addEventListener('click', () => {
+        const item = {
+            id: product.pid,
+            name: product.name,
+            price: product.price,
+            quantity: parseInt(qtyInput.value),
+        };
+        cart.push(item);
+        updateCartCount();
+        alert(`${item.name} added to cart!`);
+    });
+
+    productsGrid.appendChild(cardClone);
 }
 
-// Add product to cart
-function addToCart(product, quantity) {
-    const existingItem = cart.find((item) => item.id === product.id);
+// Fetch and render products from the backend
+async function fetchAndRenderProducts(searchTerm = '', category = '') {
+    try {
+        let url = '';
 
-    if (existingItem) {
-        existingItem.quantity += quantity;
-    } else {
-        cart.push({ ...product, quantity });
+        if (searchTerm === '' && category === '') {
+            url = `http://localhost:3000/products`;
+        } else if (searchTerm === '') {
+            url = `http://localhost:3000/products/bycat/${category}`;
+        } else {
+            url = `http://localhost:3000/products/byname/${searchTerm}`;
+            if (category) {
+                url += `?category=${category}`;
+            }
+        }
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const products = await response.json();
+        productsGrid.innerHTML = '';
+        products.forEach(renderProductCard);
+
+    } catch (err) {
+        console.error("Fetch error:", err);
+        productsGrid.innerHTML = `<p>Error loading products. Please try again.</p>`;
     }
-
-    updateCartUI();
 }
 
-// Update cart UI
-function updateCartUI() {
-    cartItemsContainer.innerHTML = "";
-    let total = 0;
+// Update the cart count display
+function updateCartCount() {
+    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    document.querySelector('.cart-count').textContent = count;
+}
 
-    cart.forEach((item) => {
-        const cartItem = document.createElement("div");
-        cartItem.classList.add("cart-item");
+// Initial product load + event listeners
+document.addEventListener("DOMContentLoaded", () => {
+    fetchAndRenderProducts(); // Load all products on page load
 
-        cartItem.innerHTML = `
-            <span>${item.name} (${item.quantity})</span>
-            <span>$${(item.price * item.quantity).toFixed(2)}</span>
-        `;
-
-        cartItemsContainer.appendChild(cartItem);
-        total += item.price * item.quantity;
+    searchInput.addEventListener('input', () => {
+        const term = searchInput.value.trim();
+        const category = categoryFilter.value;
+        fetchAndRenderProducts(term, category);
     });
 
-    cartTotal.textContent = `$${total.toFixed(2)}`;
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-}
-
-// Toggle cart modal
-function toggleCartModal() {
-    cartModal.style.display = cartModal.style.display === "block" ? "none" : "block";
-}
+    categoryFilter.addEventListener('change', () => {
+        const category = categoryFilter.value;
+        const term = ''; // Clear search when category changes
+        fetchAndRenderProducts(term, category);
+    });
+});
