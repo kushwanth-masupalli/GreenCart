@@ -1,8 +1,9 @@
 # Welcome to your Lovable project
 
-## Project info
+## webiste url
 
-**URL**: https://lovable.dev/projects/e0f5cf24-2c7c-4ba0-a22f-0ea874f83d59
+
+**URL**: https://green-cart-grove-glow.lovable.app/
 
 ## How can I edit this code?
 
