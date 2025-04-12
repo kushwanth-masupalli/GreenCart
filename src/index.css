@@ -1,0 +1,105 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 8%;
+    --foreground: 150 70% 98%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 150 70% 98%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 150 70% 98%;
+
+    --primary: 150 98% 50%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 155 54% 50%;
+    --secondary-foreground: 0 0% 5%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 150 10% 75%;
+
+    --accent: 155 54% 50%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 150 68% 50%;
+
+    --radius: 0.5rem;
+  }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 150 68% 40%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 155 54% 50%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 150 5% 90%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 155 54% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 150 68% 40%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .hover-grow {
+    @apply transition-all duration-300 hover:scale-105;
+  }
+  
+  .green-glow {
+    @apply shadow-[0_0_10px_rgba(50,205,50,0.7)];
+  }
+  
+  .product-card {
+    @apply bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 hover:green-glow;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2;
+  }
+
+  .input-search {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}
